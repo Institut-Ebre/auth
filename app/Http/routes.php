@@ -15,14 +15,20 @@ Route::get('/', function () {
 Route::get('/home', ['as' => 'auth.home', function () { return view('home'); }]);
 
 Route::get('/resource', function () {
-    $authenticated = false;
-    if (Session::has('authenticated')) {
-        if (Session::get('authenticated') == true ) {
-            $authenticated = true;
-        }
-    }
+//    $authenticated = false;
+//    if (Session::has('authenticated')) {
+//        if (Session::get('authenticated') == true ) {
+//            $authenticated = true;
+//        }
+//    }
+//
+//    if ($authenticated) {
+//        return view('resource');
+//    } else {
+//        return redirect()->route('auth.login');
+//    }
 
-    if ($authenticated) {
+    if (Auth::check()) {
         return view('resource');
     } else {
         return redirect()->route('auth.login');

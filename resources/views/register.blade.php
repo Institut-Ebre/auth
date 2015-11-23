@@ -5,6 +5,8 @@
 
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
 
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" type="text/css">
+
     <style>
         html, body {
             height: 100%;
@@ -37,9 +39,8 @@
 </head>
 <body>
 <div class="container">
+    <div class="jumbotron">REGISTER</div>
     <div class="content">
-        <div class="title">REGISTER</div>
-
         @if (count($errors) > 0)
             <div class="alert alert-danger">
                 <ul>
@@ -59,12 +60,14 @@
                        value="{{ old('name') }}"
                        required>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="emailFormGroup" >
                 <label for="email">Email address:</label>
                 <input type="email" class="form-control" id="email" name="email"
                        placeholder="myemail@example.com"
                        value="{{ old('email') }}"
-                       required>
+                       required
+                       v-on:blur="checkEmailExists" >
+                <div v-show="exists">Email ja existeix!</div>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
@@ -72,10 +75,10 @@
             </div>
             <div class="form-group">
                 <label for="password_confirmation">Password confirm:</label>
-                <input type="password" class="form-control" id="password_confirm" name="password_confirm" required>
+                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
             </div>
 
-            <button id="login" type="submit" class="btn btn-default">Register</button>
+            <button id="login" type="submit" class="btn btn-primary">Register</button>
             <button type="reset" class="btn btn-default">Reset</button>
         </form>
 
@@ -83,5 +86,7 @@
         <a id="login" href="{{ route('auth.login') }}">Loga't</a>
     </div>
 </div>
+
+<script src="{{ asset('js/main.js') }}"></script>
 </body>
 </html>
