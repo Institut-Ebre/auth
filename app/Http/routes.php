@@ -14,26 +14,23 @@ Route::get('/', function () {
 
 Route::get('/home', ['as' => 'auth.home', function () { return view('home'); }]);
 
-Route::get('/resource', function () {
-//    $authenticated = false;
-//    if (Session::has('authenticated')) {
-//        if (Session::get('authenticated') == true ) {
-//            $authenticated = true;
-//        }
-//    }
-//
-//    if ($authenticated) {
-//        return view('resource');
-//    } else {
-//        return redirect()->route('auth.login');
-//    }
 
-    if (Auth::check()) {
+
+
+
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/resource', ['as' => 'resource','middleware' => 'auth', function () {
         return view('resource');
-    } else {
-        return redirect()->route('auth.login');
-    }
 
+//  Route::get('/patata', ['as' => 'patata','uses' => 'PatataController@getPatata']);
+
+//  Route::get('/example', ['as' => 'example','uses' => 'ExampleController@getExample']);
+
+    }]);
+
+    Route::get('/phpinfo', function() {
+        return phpinfo();
+    });
 });
 
 Route::get('/flushSession',
